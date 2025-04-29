@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "./Composant/Include/header";
+import Card from "./Composant/Card/Card";
 import Footer from "./Composant/Include/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Style/globals.css";
@@ -21,6 +22,7 @@ export default function RootLayout({children, }: Readonly<{ children: React.Reac
     <html lang="en" className={rubik.className}>
       <body>
         <Header />
+        <Card titreCategorie={"Productivité / Élégance"}/>
         {children}
         <Footer />
       </body>

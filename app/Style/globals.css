@@ -1,4 +1,8 @@
 :root {
+  --grey: #DBE2EF;
+  --lightBlue: #3F72AF;
+  --darkBlue: #112D4E;
+
   --background: #FFFDEC;
   --foreground: #171717;
 }
@@ -24,10 +28,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+footer{
+  border-top: 1px solid black;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+p {
+  color: black;
 }
 
 a {
@@ -41,27 +53,31 @@ a {
   }
 }
 
+.card{
+  background-color: var(--lightBlue);
+}
+
 .color1{
-  background-color: #DBE2EF;
+  background-color: var(--grey);
 }
 
 .color2{
-  background-color: #3F72AF;
+  background-color: var(--lightBlue);
 }
 
 .color3{
-  background-color: #112D4E;
+  background-color: var(--darkBlue);
 }
 
 .colorWhite{
-  color: #FFFDEC;
+  color: var(--background);
 }
 
 .btn-outline-success{
   color: white!important;
-  border-color: #3F72AF!important;
+  border-color: var(--lightBlue)!important;
 }
 
 .btn-outline-success:hover{
-  background-color: #3F72AF!important;
+  background-color: var(--lightBlue)!important;
 }
