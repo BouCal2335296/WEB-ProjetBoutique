@@ -17,13 +17,23 @@
 }
 
 .svgBurger {
-  width: 28px; 
-  height: 28px;
+  width: 25px; 
+  height: 25px;
 }
 
 .svgLoupe {
   width: 25px; 
   height: 25px;
+}
+
+.navbar { 
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .hover-underline::after,

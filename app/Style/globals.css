@@ -3,6 +3,7 @@
   --grey: #DBE2EF;
   --lightBlue: #3F72AF;
   --darkBlue: #112D4E;
+  --mediumDarkBlue: #23446a;
   --creme : #FFFDEC;
 
   --background: #FFFDEC;
@@ -73,6 +74,10 @@ a {
 
 .color4{
   background-color: var(--creme);
+}
+
+.color5{
+  background-color: var(--mediumDarkBlue);
 }
 
 .colorWhite{
