@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap');
 :root {
   --grey: #DBE2EF;
   --lightBlue: #3F72AF;
   --darkBlue: #112D4E;
+  --creme : #FFFDEC;
 
   --background: #FFFDEC;
   --foreground: #171717;
@@ -23,7 +25,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -67,6 +69,10 @@ a {
 
 .color3{
   background-color: var(--darkBlue);
+}
+
+.color4{
+  background-color: var(--creme);
 }
 
 .colorWhite{
