@@ -1,0 +1,19 @@
+{"utilisateurs": [
+    {
+      "id": "1",
+      "nom": "Bourdet",
+      "prenom": "Calvin",
+      "addresse": "3722 rue panet",
+      "cp": "G7X 3W1",
+      "telephone": "0603523468"
+    },
+    {
+        "id": "2",
+        "nom": "Vestis",
+        "prenom": "Alan",
+        "addresse": "Pékougami",
+        "cp": "G7X 3W1",
+        "telephone": "0606060606"
+    }
+  ]
+}

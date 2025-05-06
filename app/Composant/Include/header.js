@@ -71,7 +71,7 @@ export default function Header() {
                     <div className="d-none d-md-block container-fluid pt-2 pb-2 color5">
                     <div className="row w-100">
 
-                        <div className="d-none d-md-block col-md-1 text-white"><Link className="d-flex align-items-center text-white hover-underline" href={"/"}><img src="/1hamburger-menu-mobile-svgrepo-com.svg" className="img-fluid svgBurger me-1"></img>Tout</Link></div>
+                        <div className="d-none d-md-block col-md-1 text-white"><Link className="d-flex align-items-center text-white hover-underline" href={"/PageArticle"}><img src="/1hamburger-menu-mobile-svgrepo-com.svg" className="img-fluid svgBurger me-1"></img>Tout</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Productivité / Élégance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Décoration / Ambiance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Confort / Style</Link></div>
