@@ -58,6 +58,7 @@ a {
 
 .card{
   background-color: var(--lightBlue);
+  width: 25rem;
 }
 
 .color1{

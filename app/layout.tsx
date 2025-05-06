@@ -17,7 +17,6 @@ export default function RootLayout({children, }: Readonly<{ children: React.Reac
       <body>
         <Header />
         <Card titreCategorie={"Productivité / Élégance"}/>
-        {children}
         <Footer />
       </body>
     </html>
