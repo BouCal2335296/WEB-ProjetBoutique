@@ -1,5 +1,18 @@
 import Image from "next/image";
 import styles from "./Style/page.module.css";
+import Card from "./Composant/Card/Card";
+
+export default function HomePage() {
+  return (
+    <>
+      <Card titreCategorie="Productivité / Élégance" />
+    </>
+  );
+}
+
+
+
+/*
 
 export default function Home() {
   return (
@@ -49,3 +62,4 @@ export default function Home() {
     </div>
   );
 }
+*/
