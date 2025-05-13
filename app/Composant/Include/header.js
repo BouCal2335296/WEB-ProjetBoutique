@@ -15,10 +15,12 @@ export default function Header() {
         <header>
                 <nav className="navbar color3">
                     <div className="row container-fluid">
-                        {/* Logo (desktop) */}
-                        <img src="/logo-boutique.PNG" className="col-1 img-fluid d-none d-md-block"></img>
-                        {/* Logo (mobile) */}
-                        <img src="/logo-boutique.PNG" className="col-2 img-fluid d-block d-md-none"></img>
+                        <Link href={"/"} className='col-2 col-md-1'>  
+                            {/* Logo (desktop) */}
+                            <img src="/logo3-.png" className="img-fluid d-none d-md-block imgHeaderDesktop"></img>
+                            {/* Logo (mobile) */}
+                            <img src="/logo3-.png" className="img-fluid d-block d-md-none imgHeaderMobile"></img>
+                        </Link>
 
                         {/* searchBar */}
                         <div className="col-md-6 d-none d-md-block">
@@ -38,7 +40,7 @@ export default function Header() {
                         </div>
                         
                         {/* sign in */}
-                        <div className="col-3 col-md-1 d-flex justify-content-end">
+                        <div className="col-3 col-md-1 d-flex justify-content-center">
                             <button className="btn btn-primary" type="button" onClick={toggleOffcanvas}>
                                 Sign in
                             </button>
@@ -58,7 +60,7 @@ export default function Header() {
 
 
                         {/* panier */}
-                        <div className="col-1 d-flex justify-content-end">
+                        <div className="col-1 d-flex justify-content-center">
 
                             <Link href="/" className="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-cart2 colorWhite" viewBox="0 0 16 16">
@@ -70,9 +72,8 @@ export default function Header() {
 
                     <div className="d-none d-md-block container-fluid pt-2 pb-2 color5">
                     <div className="row w-100">
-
-                        <div className="d-none d-md-block col-md-1 text-white"><Link className="d-flex align-items-center text-white hover-underline" href={"/PageArticle"}><img src="/1hamburger-menu-mobile-svgrepo-com.svg" className="img-fluid svgBurger me-1"></img>Tout</Link></div>
-                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Productivité / Élégance</Link></div>
+                        <div className="d-none d-md-block col-md-1 text-white"><Link className="d-flex align-items-center text-white hover-underline" href={"/PageArticle/Tout/"}><img src="/1hamburger-menu-mobile-svgrepo-com.svg" className="img-fluid svgBurger me-1"></img>Tout</Link></div>
+                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre1/"}>Productivité / Élégance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Décoration / Ambiance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Confort / Style</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/"}>Accessoire</Link></div>

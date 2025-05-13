@@ -16,7 +16,7 @@ export default function RootLayout({children, }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <Header />
-        <Card titreCategorie={"Productivité / Élégance"}/>
+        {/* <Card titreCategorie={"Productivité / Élégance"}/> */}
         {children}
         <Footer />
       </body>

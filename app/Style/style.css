@@ -1,4 +1,4 @@
-
+/* ----------NavBAR---------- */
 .nav-items {
   padding: 4px 12px;
   transition: border 0.3s;
@@ -26,16 +26,27 @@
   height: 25px;
 }
 
+.imgHeaderDesktop {
+  width: 80px;
+  height: 100px;
+  margin-left: 20px;
+}
+
+.imgHeaderMobile {
+  width: 100px;
+  height: 80px;
+  margin-left: 10px;
+}
+
 .navbar { 
   padding-bottom: 0;
   padding-top: 0;
 }
+/* ----------/NavBAR---------- */
 
-.container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-}
 
+
+/* ----------AnimationButton---------- */
 .hover-underline::after,
 .hover-underline::before {
   content: '';
@@ -59,3 +70,71 @@
 .hover-underline:hover::before {
   transform: scaleX(1);
 }
+/* ----------/AnimationButton---------- */
+
+
+
+/* ----------CarouselComposant---------- */
+.imgCardCarousel {
+  max-height: 150px!important;
+  min-height: 150px!important;
+}
+
+.txtCardCarousel {
+  max-height: 80px!important;
+  min-height: 80px!important;
+}
+/* ----------/CarouselComposant---------- */
+
+
+
+/* ----------Card---------- */
+.card-text {
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10; /* hautement dynamique ici */
+  color: #5c5e60;
+}
+.card-title {
+  margin: 0;
+  font-size: 1rem; /* ajuste si besoin */
+}
+/* ----------/Card---------- */
+
+
+
+/* ----------ModifBootstrap---------- */
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* ----------/ModifBootstrap---------- */
+
+
+
+/* ----------StylePageFiltre---------- */
+.divImageFond {
+  height: 250px;
+  overflow: hidden;
+}
+
+.imgGauche {
+  object-Fit: cover;
+  z-Index: 0;
+}
+
+.divImageSup {
+  width: 55%;
+  clip-Path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  overflow: hidden;
+  z-Index: 1
+}
+
+.imgDroite {
+  object-Fit: cover;
+}
+/* ----------/StylePageFiltre---------- */

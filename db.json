@@ -1,4 +1,5 @@
-{"utilisateurs": [
+{
+  "utilisateurs": [
     {
       "id": "1",
       "nom": "Bourdet",
@@ -14,6 +15,62 @@
         "addresse": "Pékougami",
         "cp": "G7X 3W1",
         "telephone": "0606060606"
+    }
+  ],
+  "articles" : [
+    {
+      "id": "1",
+      "nom": "Ray Gun",
+      "image" : "/raygun.png",
+      "description": "COD Zombie",
+      "prix": "75",
+      "quantite": "3",
+      "categorie": "Décoration / Ambiance"
+    },
+    {
+      "id": "2",
+      "nom": "Support de casque",
+      "image" : "/supportCasque.jpg",
+      "description": "Easy fix support fo helmet",
+      "prix": "9",
+      "quantite": "13",
+      "categorie": "Productivité / Élégance"
+    },
+    {
+      "id": "3",
+      "nom": "Ruban LED",
+      "image" : "/ledRoom.png",
+      "description": "Room LED, quick installation",
+      "prix": "24",
+      "quantite": "27",
+      "categorie": "Comfort / Ambiance"
+    },
+    {
+      "id": "4",
+      "nom": "Cable management",
+      "image" : "/cableManagement.jpg",
+      "description": "15Pcs pack",
+      "prix": "9",
+      "quantite": "28",
+      "categorie": "Accessoire"
+    },
+    {
+      "id": "5",
+      "nom": "Led Hexagon",
+      "prix": "40",
+      "image" : "/ledDecoration.jpg",
+      "description": "Led hexagonale intensité variable",
+      "quantite": "8",
+      "categorie": "Comfort / Ambiance"
+    },
+    {
+      "id": "6",
+      "nom": "Tapis de souris",
+      "image" : "/tapisSouris.jpg",
+      "description": "XL, 2 couleurs",
+      "prix": "12",
+      "quantite": "17",
+      "categore": "Productivité / Élégance"
     }
   ]
 }
