@@ -7,10 +7,12 @@ export default function PageArticle() {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article/categorie/1")
+        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article/categorie/3")
             .then((res) => res.json())
             .then((data) => setArticles(data));
     }, []);
+
+
 
     return <>
         <div className="position-relative w-100 divImageFond">

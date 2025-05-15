@@ -10,7 +10,7 @@ export default function Carousel() {
 
     // Fetch des articles
     useEffect(() => {
-        fetch("http://localhost:3000/articles")
+        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article")
             .then((res) => res.json())
             .then((data) => setArticles(data));
     }, []);
@@ -45,7 +45,6 @@ export default function Carousel() {
         currentIndex * articlesParPage,
         currentIndex * articlesParPage + articlesParPage
     );
-
     return (
         <div className="row d-flex align-items-center">
             <div className="col-1 text-center">
@@ -56,6 +55,7 @@ export default function Carousel() {
                 {currentArticles.map((article, index) => (
                     <CardTest
                         key={article.id || index}
+                        id={article.id}
                         image={article.image || "default.jpg"}
                         nom={article.nom || "No Title"}
                         description={article.description || "No description"}
