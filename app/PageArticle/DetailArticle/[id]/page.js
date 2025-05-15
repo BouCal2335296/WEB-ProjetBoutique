@@ -20,6 +20,17 @@ export default function DetailArticle() {
 
     if (!article) return <p>Chargement...</p>;
 
+    function AjoutPanier(){
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/article/${params.id}`, { //MOFI API PANIER
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Erreur fetch:", error));
+    }
+
     return (
         <div className="d-flex row min-vh-100">
             <div className="col-6">
@@ -41,7 +52,7 @@ export default function DetailArticle() {
                             <p>{article.prix}$</p>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button className="btn btn-primary mt-3">Ajouter</button>
+                            <button className="btn btn-primary mt-3" onClick={AjoutPanier}>Ajouter</button>
                         </div>
                     </div>
                 </div>
