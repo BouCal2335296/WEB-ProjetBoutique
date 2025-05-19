@@ -24,7 +24,7 @@ export default function DetailArticle() {
         <div className="d-flex row min-vh-100">
             <div className="col-6">
                 <div className="d-flex justify-content-center pt-5">
-                    <img src={"/ledRoom.png"} style={{ width: "80%" }} className="img-fluid" alt={article.nom} />
+                    <img src={article.image} style={{ width: "80%" }} className="img-fluid" alt={article.nom} />
                 </div>
             </div>
             <div className="col-6">
