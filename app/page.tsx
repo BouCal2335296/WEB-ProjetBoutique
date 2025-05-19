@@ -1,11 +1,11 @@
 import Image from "next/image";
 import styles from "./Style/page.module.css";
-import Card from "./Composant/Card/Card";
+import Accueil from "./Composant/Accueil/Accueil";
 
 export default function HomePage() {
   return (
     <>
-      <Card titreCategorie="Productivité / Élégance" />
+      <Accueil/>
     </>
   );
 }
