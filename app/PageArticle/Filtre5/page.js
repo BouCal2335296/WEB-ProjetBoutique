@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react"
-import CardTest from "../../Composant/CardTest/CardTest";
+import CardProduit from "../../Composant/CardProduit/CardProduit";
 
 export default function PageArticle() {
 

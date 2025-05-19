@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react"
-import CardTest from "../../Composant/CardTest/CardTest";
+import CardProduit from "../../Composant/CardProduit/CardProduit";
 
 export default function PageArticle() {
 
@@ -26,7 +26,7 @@ export default function PageArticle() {
 
         <div className="d-flex flex-wrap justify-content-center">
             {articles.map((article, index) => (
-                <CardTest
+                <CardProduit
                     key={article.id || index}
                     id={article.id}
                     image={article.image || "default.jpg"}

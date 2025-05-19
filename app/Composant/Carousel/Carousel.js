@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import CardTest from "../CardTest/CardTest";
+import CardProduit from "../CardProduit/CardProduit";
 
 export default function Carousel() {
     const [articles, setArticles] = useState([]);
