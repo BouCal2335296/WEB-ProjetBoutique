@@ -27,7 +27,7 @@
 }
 
 .imgHeaderDesktop {
-  width: 80px;
+  width: 68px;
   height: 100px;
   margin-left: 20px;
 }
@@ -105,6 +105,39 @@
 }
 /* ----------/Card---------- */
 
+/*------------Page d'accueil------------*/
+
+.cardCategorieContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 7em 0 10em 0;
+  margin: auto;
+}
+
+.cardCategorieTitle{
+  border-bottom: 2px dashed black;
+  padding: 0.3em 0 0.3em 0;
+}
+
+.imgContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.imgContainer img {
+  width: 150px;
+  height: 150px;
+  margin: 1em 0 1em 0;
+}
+
+.cardCategorieSubTitle {
+  border-top: 2px solid black;
+  padding: 0.2em 0 0.2em 0;
+
+}
+/*------------Page d'accueil------------*/
 
 
 /* ----------ModifBootstrap---------- */
