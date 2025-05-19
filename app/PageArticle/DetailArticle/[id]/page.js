@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import db from "../../../lib/localbase";
 
 export default function DetailArticle() {
     const params = useParams();
@@ -11,12 +12,31 @@ export default function DetailArticle() {
             fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/article/${params.id}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     setArticle(data);
                 })
                 .catch((error) => console.error("Erreur fetch:", error));
         }
     }, [params]);
+
+    async function ajouterPanier() {
+
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUtilisateur: "1",
+                idArticle: article.id.toString(),
+                quantiteArticle: 1,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => console.error("Erreur fetch:", error));
+    }
 
     if (!article) return <p>Chargement...</p>;
 
@@ -41,7 +61,7 @@ export default function DetailArticle() {
                             <p>{article.prix}$</p>
                         </div>
                         <div className="d-flex justify-content-end">
-                            <button className="btn btn-primary mt-3">Ajouter</button>
+                            <button className="btn btn-primary mt-3" onClick={ajouterPanier}>Ajouter</button>
                         </div>
                     </div>
                 </div>
