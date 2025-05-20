@@ -1,10 +1,19 @@
 "use client";
+import CheckoutPage from "../Composant/CheckoutPage/CheckoutPage";
+import convertToSubcurrency from "../lib/convertToSubcurrency";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import PaymentForm from "../Composant/PaymentForm/PaymentForm";
 import { useEffect, useState } from "react";
+import DetailsCommande from "../Composant/Panier/DetailsCommande";
+
+if (process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY === undefined) {
+    throw new Error("NEXT_PUBLIC_STRIPE_PUBLIC_KEY is not defined");
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 export default function Panier() {
+
     interface Article {
         id: string;
         nom: string;
@@ -12,19 +21,9 @@ export default function Panier() {
         prix: number;
     }
 
-    interface Panier {
-        id: number;
-        idUtilisateur: string;
-        idArticle: string;
-        quantiteArticle: number;
-    }
-
     const [articlePanier, setArticlePanier] = useState<Article[]>([]);
-    const [panier, setPanier] = useState<Panier[]>([]);
+    const [showModal, setShowModal] = useState(false);
 
-    const stripePromise = loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-    );
 
     // Étape 1 : Récupérer le panier de l'utilisateur
     useEffect(() => {
@@ -45,8 +44,24 @@ export default function Panier() {
             })
             .catch(err => console.error("Erreur fetch idsArticle:", err));
     }, []);
-    console.log(articlePanier);
 
+    let amount = 0;
+    articlePanier.forEach(article => {
+        amount += article.prix;
+    });
+
+    function supprimerArticle(idArticle: string) {
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers/supprimer?idUtilisateur=1&idProduit=${idArticle}`, {
+            method: "DELETE",
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Échec de la suppression");
+            // Optionnel : Recharger le panier après suppression
+            setArticlePanier(prev => prev.filter(article => article.id !== idArticle));
+        })
+        .catch(err => console.error("Erreur lors de la suppression :", err));
+    }
+    
     return (
         <>
             <div className="container-fluid d-flex">
@@ -58,9 +73,9 @@ export default function Panier() {
                             <p>Votre panier est vide.</p>
                         ) : (
                             articlePanier.map((article, index) => (
-                                <div key={index} className="d-flex color1 my-3">
+                                <div key={index} className="d-flex bg-white rounded-3 my-3">
                                     <div className="col-2">
-                                        <img src={article.image} className="img-fluid" alt={article.nom} />
+                                        <img src={article.image} className="img-fluid rounded-3" alt={article.nom} />
                                     </div>
                                     <div className="d-flex col-10">
                                         <div className="col-11 ps-3">
@@ -68,7 +83,7 @@ export default function Panier() {
                                             <div><p>{article.prix} $</p></div>
                                         </div>
                                         <div className="col-1 d-flex justify-content-center align-items-center">
-                                            <p className="m-0 text-danger" style={{ cursor: "pointer" }}>X</p>
+                                            <button className="btn m-0 text-danger" onClick={() => supprimerArticle(article.id)} >X</button>
                                         </div>
                                     </div>
                                 </div>
@@ -77,21 +92,30 @@ export default function Panier() {
                     </div>
                 </div>
 
-                <div className="col-4 border d-flex flex-column justify-content-center align-items-center">
-                    <h1>Commande</h1>
-                    <div className="d-flex flex-column color1" style={{ maxWidth: "25rem", minWidth: "25rem", maxHeight: "15rem", minHeight: "15rem" }}>
-                        <p>Total commande</p>
-                        <p>({articlePanier.length} article) : {articlePanier.reduce((total, article) => total + article.prix, 0)} $</p>
-                        <div>
-                            <button>Passer la commande</button>
-                        </div>
-                    </div>
-                </div>
+                {/* Affiche le module de paiement */}
+                <DetailsCommande articlePanier={articlePanier} onClickCommande={() => setShowModal(true)} />
             </div>
 
-            <Elements stripe={stripePromise}>
-                <PaymentForm />
-            </Elements>
+            {showModal && (
+                <>
+                    <div className="modal-overlay"></div>
+                    <div className="modal-content w-50 mt-3 mb-3">
+                        <div className="d-flex justify-content-end">
+                            <button className="btn text-danger" onClick={() => setShowModal(false)}>X</button>
+                        </div>
+                        <h2>Confirmation de commande</h2>
+                        <Elements 
+                            stripe={stripePromise}
+                            options={{
+                                mode: "payment",
+                                amount: convertToSubcurrency(10),
+                                currency: "cad",
+                            }}>
+                            <CheckoutPage amount={amount} />
+                        </Elements>
+                    </div>
+                </>
+            )}
         </>
     );
 }
