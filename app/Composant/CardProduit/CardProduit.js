@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function CardTest({ id, image, nom, description, prix }) {
+export default function CardProduit({ id, image, nom, description, prix }) {
     return (
         <Link href={`/PageArticle/DetailArticle/${id}`}>
             <div className="col-2 card m-2 color1" style={{ width: "9.5rem" }}>

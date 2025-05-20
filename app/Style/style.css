@@ -113,10 +113,9 @@
   margin: 0;
   font-size: 1rem; /* ajuste si besoin */
 }
-/* ----------/Card---------- */
+/* ----------Card---------- */
 
 /*------------Page d'accueil------------*/
-
 .panneauAccueil {
   display: flex;
   align-items: center;

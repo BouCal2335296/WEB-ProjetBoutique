@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import CardTest from "../CardTest/CardTest";
+import CardProduit from "../CardProduit/CardProduit";
 
 export default function Carousel() {
     const [articles, setArticles] = useState([]);
@@ -22,7 +22,7 @@ export default function Carousel() {
             if (width >= 768) {
                 setArticlesParPage(5); // écran md et +
             } else {
-                setArticlesParPage(4); // petit écran
+                setArticlesParPage(2); // petit écran
             }
         };
 
@@ -53,7 +53,7 @@ export default function Carousel() {
 
             <div className="col-10 d-flex flex-wrap justify-content-center gap-3">
                 {currentArticles.map((article, index) => (
-                    <CardTest
+                    <CardProduit
                         key={article.id || index}
                         id={article.id}
                         image={article.image || "default.jpg"}

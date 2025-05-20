@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "./Composant/Include/header";
+import Card from "./Composant/CardCategorie/CardCategorie";
 import Footer from "./Composant/Include/footer";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Style/globals.css";
