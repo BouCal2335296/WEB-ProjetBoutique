@@ -50,7 +50,7 @@ export default function Header() {
                         <div className={`offcanvas offcanvas-end ${showOffcanvas ? 'show' : ''} color4`} tabIndex="-1" style={{ visibility: showOffcanvas ? 'visible' : 'hidden' }} aria-labelledby="offcanvasRightLabel">
                             <div className="offcanvas-header">
                                 <h5 className="offcanvas-title" id="offcanvasRightLabel">Connexion</h5>
-                                <button type="button" className="btn-close" onClick={closeOffcanvas}></button>
+                                <button type="button" className="btn-close " onClick={closeOffcanvas}></button>
                             </div>
                             <div className="offcanvas-body">
                                 {/* contenu du composant connexion */}

@@ -10,6 +10,8 @@ export default function Connexion() {
         // fetch('http://localhost:3000/utilisateurs')
         //     .then(response => response.json())
         //     .then();
+        
+        param.preventDefault();
     }
 
 
@@ -28,7 +30,7 @@ export default function Connexion() {
                 </div>
 
                 <div className="d-flex justify-content-end mt-3">
-                    <button type="submit">Connexion</button>
+                    <button type="submit" className="buttonBurger">Connexion</button>
                 </div>
             </form>
         </div>
