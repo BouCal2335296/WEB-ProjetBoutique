@@ -1,36 +1,83 @@
 import { useState, useEffect } from "react";
+import db from '../../lib/localbase';
 
-export default function Connexion() {
+export default function Connexion({ onClose }) {
 
-    function login(param) {
+  async function login(event) {
+    event.preventDefault();
 
-        const identifiant = param.get('identifiant');
-        const motDePasse = param.get('motDePasse');
+    const formData = new FormData(event.target);
+    const identifiant = formData.get('identifiant');
+    const motDePasse = formData.get('motDePasse');
 
-        // fetch('http://localhost:3000/utilisateurs')
-        //     .then(response => response.json())
-        //     .then();
+    try {
+      const response = await fetch('https://projet-prog4e07.cegepjonquiere.ca/api/Accounts/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          Username: identifiant,
+          Password: motDePasse
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.token) {
+        await stockerToken(data.token, data.userName, data.role);
+        if (onClose) onClose();
+      } else {
+        console.error("Token manquant dans la réponse");
+      }
+    } catch (err) {
+      console.error("Erreur lors de la connexion");
     }
+  }
 
 
-    return (
-        <div>
-            <form action={login}>
-                <div className="d-flex justify-content-between mt-3">
-                    <div className="d-flex flex-column">
-                        <label>Identifiant :</label>
-                        <label className="mt-3">Mot de passe :</label>
-                    </div>
-                    <div className="d-flex flex-column">
-                        <input type="text" id="identifiant" name="identifiant"></input>
-                        <input type="password" id="motDePasse" name="motDePasse" className="mt-3"></input>
-                    </div>
-                </div>
-
-                <div className="d-flex justify-content-end mt-3">
-                    <button type="submit">Connexion</button>
-                </div>
-            </form>
+  return (
+    <div className="formulaire p-3 shadow-sm">
+      <form onSubmit={login}>
+        <div className="mb-3">
+          <label htmlFor="identifiant" className="form-label fw-semibold">Identifiant</label>
+          <input
+            type="text"
+            id="identifiant"
+            name="identifiant"
+            className="form-control"
+            placeholder="Votre identifiant"
+            required
+          />
         </div>
-    );
+
+        <div className="mb-3">
+          <label htmlFor="motDePasse" className="form-label fw-semibold">Mot de passe</label>
+          <input
+            type="password"
+            id="motDePasse"
+            name="motDePasse"
+            className="form-control"
+            placeholder="Votre mot de passe"
+            required
+          />
+        </div>
+
+        <div className="text-end">
+          <button type="submit" className="buttonBurger">Connexion</button>
+        </div>
+      </form>
+    </div>
+
+  );
 }
+
+async function stockerToken(token, userName, role) {
+  return db.collection('tokens').doc('jwt').set({
+    id: 'jwt',
+    token,
+    username: userName,
+    role
+  });
+}
+

@@ -40,6 +40,17 @@ export default function DetailArticle() {
 
     if (!article) return <p>Chargement...</p>;
 
+    function AjoutPanier(){
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/article/${params.id}`, { //MOFI API PANIER
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .catch((error) => console.error("Erreur fetch:", error));
+    }
+
     return (
         <div className="d-flex row min-vh-100">
             <div className="col-6">
