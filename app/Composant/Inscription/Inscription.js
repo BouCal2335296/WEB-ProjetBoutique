@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import db from '../../lib/localbase';
 
-export default function Connexion() {
+export default function Connexion({ onClose }) {
 
     function Register(event) {
         event.preventDefault(); // ✅ à faire en premier
@@ -58,6 +58,7 @@ export default function Connexion() {
             .then(data => {
                 if (data.token) {
                     stockerToken(data.token, data.userName, data.role);
+                    if (onClose) onClose();
                 }
             })
             .catch(err => {
@@ -173,15 +174,12 @@ export default function Connexion() {
     );
 }
 
-function stockerToken(token, userName, role) {
-    db.collection('tokens').doc({ id: 'jwt' }).set({
-        id: 'jwt',
-        token: token,
-        username: userName,
-        role: role
+async function stockerToken(token, userName, role) {
+    return db.collection('tokens').doc('jwt').set({
+      id: 'jwt',
+      token,
+      username: userName,
+      role
     });
-}
-
-
-//ERREUR CAR LE TOKEN N'EST PAS STOCKER DANS LE LOCALSTORAGE
-//No Documents found in tokens Collection with criteria {"id":"jwt"}.
+  }
+  

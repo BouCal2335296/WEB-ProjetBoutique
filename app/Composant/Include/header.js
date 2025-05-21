@@ -5,12 +5,14 @@ import LanguageSelector from "../Language/languageSelector";
 import Connexion from "../Connexion/Connexion";
 import Inscription from "../Inscription/Inscription";
 import db from '../../lib/localbase';
+import AddProduit from "../AddProduit/AddProduit";
 
 export default function Header() {
 
     const [showOffcanvasConnexion, setShowOffcanvasConnexion] = useState(false);
     const [showOffcanvasInscription, setShowOffcanvasInscription] = useState(false);
     const [username, setUsername] = useState(null);
+    const [role, setRole] = useState(null);
 
     const toggleOffcanvasConnexion = () => setShowOffcanvasConnexion(!showOffcanvasConnexion);
     const closeOffcanvasConnexion = () => setShowOffcanvasConnexion(false);
@@ -19,17 +21,27 @@ export default function Header() {
     const toggleOffcanvasInscription = () => setShowOffcanvasInscription(!showOffcanvasConnexion);
     const closeOffcanvasInscription = () => setShowOffcanvasInscription(false);
     useEffect(() => {
-        db.collection('tokens').get().then(records => {
-            if (records.length > 0) {
-                const tokenDoc = records.find(r => r.id === 'jwt');
-                if (tokenDoc && tokenDoc.username) {
+        async function fetchToken() {
+            try {
+                const records = await db.collection('tokens').get();
+                const tokenDoc = records.find(doc => doc.id === 'jwt');
+                if (tokenDoc) {
                     setUsername(tokenDoc.username);
+                    setRole(tokenDoc.role);
+                } else {
+                    setUsername(null);
+                    setRole(null);
                 }
-            } else {
+            } catch (error) {
+                console.error("Erreur lors de la récupération du token", error);
                 setUsername(null);
+                setRole(null);
             }
-        });
+        }
+
+        fetchToken();
     }, []);
+
 
     function deconnexion() {
         db.collection('tokens').delete().then(() => {
@@ -37,13 +49,11 @@ export default function Header() {
         });
     }
 
-
-
     return (
         <header>
             <nav className="navbar color3">
                 <div className="row container-fluid">
-                    <Link href={"/"} className='col-2 col-md-1'>
+                    <Link href={"/"} className='col-1 col-md-1'>
                         {/* Logo (desktop) */}
                         <img src="/logo3-.png" className="img-fluid d-none d-md-block imgHeaderDesktop"></img>
                         {/* Logo (mobile) */}
@@ -51,7 +61,7 @@ export default function Header() {
                     </Link>
 
                     {/* searchBar */}
-                    <div className="col-md-6 d-none d-md-block">
+                    <div className="col-md-5 d-none d-md-block">
                         <form className="d-flex justify-content-center">
                             <input className="form-control w-75 me-2 color4" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-success pl-3" type="submit"><img src="/loupe-svgrepo-com.svg" className="img-fluid svgLoupe"></img></button>
@@ -59,23 +69,26 @@ export default function Header() {
                     </div>
 
                     {/* langue */}
-                    <div className="col-3 col-md-1 d-flex justify-content-start">
+                    <div className="col-2 col-md-1 d-flex justify-content-start">
                         <LanguageSelector />
                     </div>
 
                     {/* menu admin */}
-                    <div className="col-3 col-md-2">
-                    </div>
-
-                    {/* sign in */}
-                    <div className="col-3 col-md-1 d-flex justify-content-center">
+                    <div className="col-1">
                         <button className="btn btn-primary" type="button" onClick={toggleOffcanvasInscription}>
                             Register
                         </button>
                     </div>
 
                     {/* sign in */}
-                    <div className="col-3 col-md-1 d-flex justify-content-center">
+                    <div className="col-1 d-flex justify-content-center">
+                        <button className="btn btn-primary" type="button" onClick={toggleOffcanvasInscription}>
+                            Register
+                        </button>
+                    </div>
+
+                    {/* sign in */}
+                    <div className="col-1 d-flex justify-content-center">
                         {username ? (
                             <button className="btn btn-primary" type="button" onClick={deconnexion}>
                                 {username}
@@ -94,7 +107,7 @@ export default function Header() {
                         </div>
                         <div className="offcanvas-body">
                             {/* contenu du composant connexion */}
-                            <Connexion />
+                            <Connexion onClose={closeOffcanvasConnexion} />
                         </div>
                     </div>
 
@@ -106,7 +119,7 @@ export default function Header() {
                         </div>
                         <div className="offcanvas-body">
                             {/* contenu du composant Inscription */}
-                            <Inscription />
+                            <Inscription onClose={closeOffcanvasInscription} />
                         </div>
                     </div>
 
