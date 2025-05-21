@@ -81,6 +81,12 @@
   width: 6em;
 }
 
+.formulaire{
+  background-color: var(--darkBlue);
+  color: var(--grey);
+  border-radius: 1em;
+}
+
 
 /*-----------/Menu Burger-----------*/
 
