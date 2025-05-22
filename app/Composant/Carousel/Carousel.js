@@ -1,37 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import CardProduit from "../CardProduit/CardProduit";
 
-export default function Carousel() {
-    const [articles, setArticles] = useState([]);
+export default function Carousel({ articles }) {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [articlesParPage, setArticlesParPage] = useState(5);
+    const [articlesParPage, setArticlesParPage] = useState(4); // 4 par défaut
 
-    // Fetch des articles
-    useEffect(() => {
-        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article")
-            .then((res) => res.json())
-            .then((data) => setArticles(data));
-    }, []);
-
-    // Gestion responsive du nombre d'articles par page
+    // Gestion responsive
     useEffect(() => {
         const handleResize = () => {
-            const width = window.innerWidth;
-            if (width >= 768) {
-                setArticlesParPage(5); // écran md et +
-            } else {
-                setArticlesParPage(2); // petit écran
-            }
+            setArticlesParPage(window.innerWidth >= 768 ? 4 : 2);
         };
 
-        handleResize(); // appel initial
+        handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-    
-    const pageCount = Math.ceil(articles.length / articlesParPage);
+
+    const pageCount = Math.ceil((articles?.length || 0) / articlesParPage);
 
     const next = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % pageCount);
@@ -45,6 +32,7 @@ export default function Carousel() {
         currentIndex * articlesParPage,
         currentIndex * articlesParPage + articlesParPage
     );
+
     return (
         <div className="row d-flex align-items-center">
             <div className="col-1 text-center">
@@ -52,9 +40,9 @@ export default function Carousel() {
             </div>
 
             <div className="CarouselCard col-10 d-flex flex-wrap justify-content-center">
-                {currentArticles.map((article, index) => (
+                {currentArticles.map((article) => (
                     <CardProduit
-                        key={article.id || index}
+                        key={article.id}
                         id={article.id}
                         image={article.image || "default.jpg"}
                         nom={article.nom || "No Title"}
