@@ -5,7 +5,6 @@ import LanguageSelector from "../Language/languageSelector";
 import Connexion from "../Connexion/Connexion";
 import Inscription from "../Inscription/Inscription";
 import db from '../../lib/localbase';
-import AddProduit from "../AddProduit/AddProduit";
 
 export default function Header() {
 
@@ -74,13 +73,18 @@ export default function Header() {
                     </div>
 
                     {/* menu admin */}
-                    <div className="col-1">
-                        <button className="btn btn-primary" type="button" onClick={toggleOffcanvasInscription}>
-                            Register
-                        </button>
+                    <div className="col-1 adminButton">
+                        {role === "Administrateur" ? (
+                            <Link href="/AddProduit">
+                                <button className="btn btn-primary" type="button">
+                                    Ajout produit
+                                </button>
+                            </Link>) :
+                            null}
                     </div>
 
-                    {/* sign in */}
+
+                    {/* Register */}
                     <div className="col-1 d-flex justify-content-center">
                         <button className="btn btn-primary" type="button" onClick={toggleOffcanvasInscription}>
                             Register
@@ -138,8 +142,8 @@ export default function Header() {
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre1/"}>Productivité / Élégance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre2/"}>Décoration / Ambiance</Link></div>
                         <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre3/"}>Confort / Style</Link></div>
-                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre4/"}>Accessoire</Link></div>
-                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre5/"}>Pack de démarrage</Link></div>
+                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre4/"}>Pack de démarrage</Link></div>
+                        <div className="d-none d-md-block col-md-auto"><Link className="text-white hover-underline" href={"/PageArticle/Filtre5/"}>Accessoire</Link></div>
                     </div>
                 </div>
 
