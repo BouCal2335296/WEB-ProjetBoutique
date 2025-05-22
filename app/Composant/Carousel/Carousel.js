@@ -51,7 +51,7 @@ export default function Carousel() {
                 <button onClick={prev} className="bg-black/50 text-black px-2 py-1 rounded">‹</button>
             </div>
 
-            <div className="col-10 d-flex flex-wrap justify-content-center gap-3">
+            <div className="CarouselCard col-10 d-flex flex-wrap justify-content-center">
                 {currentArticles.map((article, index) => (
                     <CardProduit
                         key={article.id || index}
