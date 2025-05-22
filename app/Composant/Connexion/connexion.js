@@ -5,7 +5,6 @@ export default function Connexion({ onClose }) {
 
   async function login(event) {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const identifiant = formData.get('identifiant');
     const motDePasse = formData.get('motDePasse');
@@ -27,6 +26,7 @@ export default function Connexion({ onClose }) {
       if (data.token) {
         await stockerToken(data.token, data.userName, data.role);
         if (onClose) onClose();
+        window.location.reload();
       } else {
         console.error("Token manquant dans la réponse");
       }

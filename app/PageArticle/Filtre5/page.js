@@ -7,10 +7,9 @@ export default function PageArticle() {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article/categorie/4")
+        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/article/categorie/5")
             .then((res) => res.json())
-            .then((data) => setArticles(data))
-            .then((data) => console.log(data));
+            .then((data) => setArticles(data));
     }, []);
 
 
@@ -29,7 +28,7 @@ export default function PageArticle() {
 
         <div className="d-flex flex-wrap justify-content-center">
             {articles.map((article, index) => (
-                <CardTest
+                <CardProduit
                     key={article.id || index}
                     id={article.id}
                     image={article.image || "default.jpg"}

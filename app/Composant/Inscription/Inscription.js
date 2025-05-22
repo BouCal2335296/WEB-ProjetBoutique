@@ -4,7 +4,7 @@ import db from '../../lib/localbase';
 export default function Connexion({ onClose }) {
 
     function Register(event) {
-        event.preventDefault(); // ✅ à faire en premier
+        event.preventDefault();
 
         const formData = new FormData(event.target);
         const LastName = formData.get('LastName');
