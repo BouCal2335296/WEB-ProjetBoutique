@@ -1,9 +1,10 @@
 'use client';
 
 import db from '../lib/localbase';
-import { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function AddProduit() {
+  const router = useRouter();
 
   async function recupererToken() {
     try {
@@ -19,15 +20,19 @@ export default function AddProduit() {
       return null;
     }
   }
-  
+
   async function utiliserToken() {
     const result = await recupererToken();
     if (result) {
       return result.token;
     }
+    else {
+      window.location.href = "../SessionExpirer";
+      db.collection('tokens').delete();
+    }
   }
-  
-  
+
+
 
   async function envoyerProduit(event) {
     event.preventDefault();
@@ -56,44 +61,43 @@ export default function AddProduit() {
       })
     })
       .then(res => {
-        if (res.status === 401) {
-          //window.location.href = "../SessionExpirer";
-          //db.collection('tokens').delete();
+        if (!res.ok) {
+          window.location.href = "../SessionExpirer";
+          db.collection('tokens').delete();
+        }
+        else{          
+        router.push("../PageArticle/Tout");
+        event.target.reset();
         }
         return res.json();
       })
-      .then(data => {
-        console.log("Produit ajouté :", data);
-        event.target.reset();
-      })
-      .catch(error => console.error("Erreur :", error));
   }
 
   return (
-    <form className="ajoutProduit" onSubmit={envoyerProduit}>
-      <div className="image-panel">
+    <form className="DetailsProduit" onSubmit={envoyerProduit}>
+      <div className="image-panel borderDashed">
         <input type="text" name="lienImage" placeholder="Lien Image..." required />
       </div>
 
       <div className="texte-panel">
-        <div className="titre-box">
+        <div className="titre-box borderDashed">
           <input type="text" name="nom" placeholder="Nom du produit..." required />
         </div>
 
-        <div className="description-box">
+        <div className="description-box borderDashed">
           <textarea name="description" placeholder="Description du produit..." required></textarea>
         </div>
 
         <div className="small-boxes">
-          <div>
+          <div className='borderDashed'>
             <input type="number" name="quantite" step="1" min="0" placeholder="Quantité : 12" required />
           </div>
-          <div>
+          <div className='borderDashed'>
             <input type="number" name="prix" step="0.01" min="0" placeholder="Prix : 12.50" required />
           </div>
         </div>
 
-        <div className="categorie-box">
+        <div className="categorie-box borderDashed">
           <select name="categorie" className="categorie" required>
             <option value="1">Productivité / Élégance</option>
             <option value="2">Décoration / Ambiance</option>

@@ -67,11 +67,6 @@ export default function Header() {
                         </form>
                     </div>
 
-                    {/* langue */}
-                    <div className="col-2 col-md-1 d-flex justify-content-start">
-                        <LanguageSelector />
-                    </div>
-
                     {/* menu admin */}
                     <div className="col-1 adminButton">
                         {role === "Administrateur" ? (
