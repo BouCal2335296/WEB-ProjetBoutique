@@ -17,8 +17,8 @@ export default function DetailsCommande({ articlePanier, onClickCommande }) {
         </>;
     } else {
         return <>
-            <div className="col-4 border d-flex flex-column justify-content-center align-items-center">
-                <div className="d-flex flex-column bg-white rounded-3 border p-2" style={{ maxWidth: "25rem", minWidth: "25rem", maxHeight: "15rem", minHeight: "15rem" }}>
+            <div className="col-5 col-md-4 border d-flex flex-column pt-5 justify-content-top align-items-center">
+                <div className="col-11 col-md-10 d-flex flex-column bg-white rounded-3 border p-2" >
                     <h2>Commande</h2>
                     <p className="mt-md-5">Total commande</p>
                     {/* Nombre article au panier + prix */}

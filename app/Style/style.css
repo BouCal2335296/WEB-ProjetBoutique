@@ -44,6 +44,15 @@
   padding-bottom: 0;
   padding-top: 0;
 }
+
+.scrolling-wrapper {
+  -ms-overflow-style: none;  /* IE et Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
 /* ----------/NavBAR---------- */
 
 
@@ -319,6 +328,8 @@
   padding: 2rem;
   border-radius: 10px;
   z-index: 1001;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 /* ----------/StylePagePanier---------- */
 

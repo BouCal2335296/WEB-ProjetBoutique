@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import db from "../../../lib/localbase";
+import { notifyPanierChange } from '../../../lib/panierEvent';
 
 export default function DetailArticle() {
     const params = useParams();
@@ -38,7 +39,8 @@ export default function DetailArticle() {
         }
     }, [params]);
 
-    async function ajouterPanier() {
+    async function ajouterPanier(event) {
+        event.preventDefault();
 
         fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers`, {
             method: "POST",
@@ -52,8 +54,8 @@ export default function DetailArticle() {
             }),
         })
             .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
+            .then((data) => {    
+                notifyPanierChange();
             })
             .catch((error) => console.error("Erreur fetch:", error));
     }
@@ -70,7 +72,6 @@ export default function DetailArticle() {
             .then((res) => res.json())
             .catch((error) => console.error("Erreur fetch:", error));
     }
-
     return (
         <>
 
