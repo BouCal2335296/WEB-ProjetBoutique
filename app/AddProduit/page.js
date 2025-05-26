@@ -1,7 +1,6 @@
 'use client';
 
 import db from '../lib/localbase';
-import { useState } from 'react';
 
 export default function AddProduit() {
 
@@ -60,6 +59,7 @@ export default function AddProduit() {
           //window.location.href = "../SessionExpirer";
           //db.collection('tokens').delete();
         }
+        afficherAlerte("Produit ajouté avec succès.");
         return res.json();
       })
       .then(data => {
@@ -67,6 +67,19 @@ export default function AddProduit() {
         event.target.reset();
       })
       .catch(error => console.error("Erreur :", error));
+  }
+
+  function afficherAlerte(message) {
+    const alerteDiv = document.getElementById("alerteSucces");
+    const texteErreur = document.getElementById("texteSucces");
+
+    texteErreur.textContent = message;
+    alerteDiv.classList.remove("d-none"); // Affiche l'alerte
+  }
+
+  function masquerAlerte(message) {
+      const alerteDiv = document.getElementById("alerteSucces");
+      alerteDiv.classList.add("d-none"); // Supprime l'alerte
   }
 
   return (
@@ -105,6 +118,10 @@ export default function AddProduit() {
 
         <div className="bouton-box">
           <button className="btn btn-primary" type="submit">Ajouter</button>
+        </div>
+        <div id="alerteSucces" className="alert alert-success alert-dismissible fade show d-none mt-3" role="alert">
+          <span id="texteSucces"></span>
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Fermer" onClick={masquerAlerte}></button>
         </div>
       </div>
     </form>

@@ -31,9 +31,7 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
     event.preventDefault();
     setLoading(true);
 
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     const { error: submitError } = await elements.submit();
 
@@ -47,10 +45,11 @@ const CheckoutPage = ({ amount }: { amount: number }) => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `http://www.localhost:3000/`,
+        return_url: `http://www.localhost:3000/PageTransactionApprouver`,
       },
     });
 
+    
     if (error) {
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)

@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 export default function PageArticle() {
     const [articles, setArticles] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [articlesParPage, setArticlesParPage] = useState(5);
 
     useEffect(() => {
         // Récupérer articles
@@ -20,18 +19,6 @@ export default function PageArticle() {
             .then((data) => setCategories(data));
     }, []);
 
-    // Adaptation responsive
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            setArticlesParPage(width >= 768 ? 4 : 2);
-        };
-
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
     // 🔎 Associer les articles à leur nom de catégorie
     const filtrerParCategorieNom = (nomCategorie) => {
         // Trouver l'ID de la catégorie à partir de son nom
@@ -39,7 +26,6 @@ export default function PageArticle() {
         if (!categorieTrouvee) return [];
         return articles.filter(a => a.categorieArticleId === categorieTrouvee.id);
     };
-
     return (
         <div>
             <div className='ms-2 mt-3'>

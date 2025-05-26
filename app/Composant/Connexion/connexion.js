@@ -24,7 +24,7 @@ export default function Connexion({ onClose }) {
       const data = await response.json();
 
       if (data.token) {
-        await stockerToken(data.token, data.userName, data.role);
+        await stockerToken(data.token, data.role, data.userId, data.username);
         if (onClose) onClose();
         window.location.reload();
       } else {
@@ -64,7 +64,7 @@ export default function Connexion({ onClose }) {
         </div>
 
         <div className="text-end">
-          <button type="submit" className="buttonBurger">Connexion</button>
+          <button type="submit" className="btn btn-primary ">Connexion</button>
         </div>
       </form>
     </div>
@@ -72,12 +72,13 @@ export default function Connexion({ onClose }) {
   );
 }
 
-async function stockerToken(token, userName, role) {
+async function stockerToken(token, role, userId, username) {
   return db.collection('tokens').doc('jwt').set({
     id: 'jwt',
     token,
-    username: userName,
-    role
+    role,
+    userId,
+    username
   });
 }
 

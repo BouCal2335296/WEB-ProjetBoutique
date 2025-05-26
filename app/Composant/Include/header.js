@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import LanguageSelector from "../Language/languageSelector";
+import MenuAdmin from "../MenuAdmin/menuAdmin";
 import Connexion from "../Connexion/Connexion";
 import Inscription from "../Inscription/Inscription";
 import db from '../../lib/localbase';
 
 import { listenPanierChange, removePanierListener } from '../../lib/panierEvent';
+
 export default function Header() {
 
     const [showOffcanvasConnexion, setShowOffcanvasConnexion] = useState(false);
@@ -15,35 +17,51 @@ export default function Header() {
     const [role, setRole] = useState(null);
     const [nombrePanier, setNombrePanier] = useState(0);
 
+    // Mecanisme ouverture/fermeture de l'offcanvas connexion
     const toggleOffcanvasConnexion = () => setShowOffcanvasConnexion(!showOffcanvasConnexion);
     const closeOffcanvasConnexion = () => setShowOffcanvasConnexion(false);
 
-
+    // Mecanisme ouverture/fermeture de l'offcanvas inscription
     const toggleOffcanvasInscription = () => setShowOffcanvasInscription(!showOffcanvasConnexion);
     const closeOffcanvasInscription = () => setShowOffcanvasInscription(false);
+
+    const [idUtilisateur, setIdUtilisateur] = useState(0);
+
     useEffect(() => {
-        async function fetchToken() {
-            try {
-                const records = await db.collection('tokens').get();
-                const tokenDoc = records.find(doc => doc.id === 'jwt');
-                if (tokenDoc) {
-                    setUsername(tokenDoc.username);
-                    setRole(tokenDoc.role);
-                } else {
-                    setUsername(null);
-                    setRole(null);
-                }
-            } catch (error) {
-                console.error("Erreur lors de la récupération du token", error);
-                setUsername(null);
-                setRole(null);
+        //Assigne l'ID de l'utilisateur connecté au JWT
+        async function fetchUserId() {
+            const tokenDoc = await db.collection('tokens').doc('jwt').get();
+            if (tokenDoc && tokenDoc.userId) {
+                setIdUtilisateur(tokenDoc.userId);
+                setRole(tokenDoc.role);
+                setUsername(tokenDoc.username);
             }
         }
-
-        fetchToken();
+        fetchUserId();
     }, []);
 
+    // useEffect(() => {
+    //     async function fetchToken() {
+    //         try {
+    //             const records = await db.collection('tokens').get();
+    //             const tokenDoc = records.find(doc => doc.id === 'jwt');
+    //             if (tokenDoc) {
+    //                 setUsername(tokenDoc.username);
+    //                 setRole(tokenDoc.role);
+    //             } else {
+    //                 setUsername(null);
+    //                 setRole(null);
+    //             }
+    //         } catch (error) {
+    //             console.error("Erreur lors de la récupération du token", error);
+    //             setUsername(null);
+    //             setRole(null);
+    //         }
+    //     }
+    //     fetchToken();
+    // }, []); //BUG CONSOLE
 
+    //Supprime le jwt lors de la déconnexion
     function deconnexion() {
         db.collection('tokens').delete().then(() => {
             window.location.reload();
@@ -51,9 +69,10 @@ export default function Header() {
     }
 
 
+    //Affiche la quantité de produit dans le panier
     useEffect(() => {
         const fetchPanier = () => {
-            fetch("/api/panier")
+            fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers/idsArticle?id=${idUtilisateur}`)
                 .then(res => res.json())
                 .then(data => setNombrePanier(data.length));
         };
@@ -67,18 +86,18 @@ export default function Header() {
         return () => {
             removePanierListener(handler);
         };
-    }, []);
+    }, [idUtilisateur]);
 
     
     return (
         <header>
             <nav className="navbar color3">
-                <div className="row container-fluid">
+                <div className="container-fluid p-0">
                     <Link href={"/"} className='col-2 col-md-1'>
                         {/* Logo (desktop) */}
-                        <img src="/logo3-.png" className="img-fluid d-none d-md-block imgHeaderDesktop"></img>
+                        <img src="https://projet-prog4e07.cegepjonquiere.ca/logoBoutique.png" className="img-fluid rounded-3 d-none d-md-block imgHeaderDesktop"></img>
                         {/* Logo (mobile) */}
-                        <img src="/logo3-.png" className="img-fluid d-block d-md-none imgHeaderMobile"></img>
+                        <img src="https://projet-prog4e07.cegepjonquiere.ca/logoBoutique.png" className="img-fluid rounded-3 d-block d-md-none imgHeaderMobile"></img>
                     </Link>
 
                     {/* searchBar */}
@@ -90,36 +109,38 @@ export default function Header() {
                     </div>
 
                     {/* langue */}
-                    <div className="col-2 col-md-1 d-flex justify-content-start">
+                    <div className="col-3 col-md-1 p-0 d-flex justify-content-end justify-content-md-start">
                         <LanguageSelector />
                     </div>
 
                     {/* menu admin */}
-                    <div className="col-1 col-md-1 adminButton">
-                        {role === "Administrateur" ? (
-                            <Link href="/AddProduit">
-                                <button className="btn btn-primary" type="button">
-                                    Ajout produit
-                                </button>
-                            </Link>) :
-                            null}
-                    </div>
+                    {role === "Administrateur" ? (
+                        <div className="col-3 p-0 d-flex justify-content-center      col-md-1">
+                            <MenuAdmin />
+                        </div>) :
+                                role === "Utilisateur" ? (
+                        <div className="col-3 p-0      col-md-1 d-md-flex justify-content-md-center">
+                            <p className='text-white m-0 p-2'>Bienvenu, {username}</p>
+                        </div>
+                    ) : null}
 
 
                     {/* Register */}
-                    <div className="col-2 p-0        col-md-1 d-md-flex justify-content-center">
-                        <button className="btn btn-primary p-1" type="button" onClick={toggleOffcanvasInscription}>
-                            S'inscrire
-                        </button>
-                    </div>
+                    {role ? null : 
+                        <div className="col-3 p-0 d-flex justify-content-end       col-md-1">
+                            <button className="btn btn-primary p-1 ms-md-0" type="button" onClick={toggleOffcanvasInscription}>
+                                S'inscrire
+                            </button>
+                        </div>
+                    }
 
                     {/* sign in */}
-                    <div className="col-2 p-0        col-md-1 d-md-flex justify-content-center">
-                        {username ? (
-                            <button className="btn btn-primary p-1" type="button" onClick={deconnexion}>
-                                {username}
+                    <div className="col-3 p-0        col-md-1 d-flex justify-content-center">
+                        {role === "Utilisateur" || role === "Administrateur" ? (
+                            <button className="btn btn-primary p-1 me-4 me-md-0 ms-md-5" type="button" onClick={deconnexion}>
+                                Deconnexion
                             </button>) : (
-                            <button className="btn btn-primary p-1" type="button" onClick={toggleOffcanvasConnexion}>
+                            <button className="btn btn-primary p-1 ms-md-0" type="button" onClick={toggleOffcanvasConnexion}>
                                 Connexion
                             </button>
                         )}
@@ -150,8 +171,8 @@ export default function Header() {
                     </div>
                     
                     {/* panier */}
-                    <div className="col-2          col-md-1 d-flex justify-content-center">
-                        <Link href="/PagePanier/" className="btn d-flex flex-column">
+                    <div className="col-1          col-md-1 p-0">
+                        <Link href="/PagePanier/" className="btn d-flex flex-column justify-content-center align-items-center">
                             <span className='text-white'>{nombrePanier}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-cart2 colorWhite" viewBox="0 0 16 16">
                                 <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />

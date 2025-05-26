@@ -46,7 +46,6 @@ export default function Carousel({ articles }) {
                         id={article.id}
                         image={article.image || "default.jpg"}
                         nom={article.nom || "No Title"}
-                        description={article.description || "No description"}
                         prix={article.prix}
                     />
                 ))}

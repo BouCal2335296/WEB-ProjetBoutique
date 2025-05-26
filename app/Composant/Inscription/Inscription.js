@@ -166,7 +166,7 @@ export default function Connexion({ onClose }) {
                 </div>
 
                 <div className="text-end">
-                    <button type="submit" className="buttonBurger">Connexion</button>
+                    <button type="submit" className="btn btn-primary">S'inscrire</button>
                 </div>
             </form>
         </div>

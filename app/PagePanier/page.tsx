@@ -1,4 +1,7 @@
 "use client";
+
+import db from "../lib/localbase";
+
 import CheckoutPage from "../Composant/CheckoutPage/CheckoutPage";
 import convertToSubcurrency from "../lib/convertToSubcurrency";
 import { Elements } from "@stripe/react-stripe-js";
@@ -27,11 +30,24 @@ export default function Panier() {
 
     const [articlePanier, setArticlePanier] = useState<Article[]>([]);
     const [showModal, setShowModal] = useState(false);
+    const [idUtilisateur, setIdUtilisateur] = useState(0);
 
+    useEffect(() => {
+
+        async function fetchUserId() {
+            const tokenDoc = await db.collection('tokens').doc('jwt').get();
+            if (tokenDoc && tokenDoc.userId) {
+                setIdUtilisateur(tokenDoc.userId);
+            }
+        }
+    
+        fetchUserId();
+    }, []);
 
     // Étape 1 : Récupérer le panier de l'utilisateur
     useEffect(() => {
-        fetch("https://projet-prog4e07.cegepjonquiere.ca/api/paniers/idsArticle?id=1")
+        if (idUtilisateur === 0) return;
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers/idsArticle?id=${idUtilisateur}`)
             .then((res) => res.json())
             .then((panier: { id: number; idArticle: number; quantiteArticle: number }[]) => {
                 if (panier.length === 0) return;
@@ -56,7 +72,7 @@ export default function Panier() {
                     .catch(err => console.error("Erreur fetch articlePanier:", err));
             })
             .catch(err => console.error("Erreur fetch idsArticle:", err));
-    }, []);
+    }, [idUtilisateur]);
     
     
 
@@ -66,7 +82,7 @@ export default function Panier() {
     });
 
     function supprimerArticle(idPanier: number) {
-        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers/supprimer?idUtilisateur=1&id=${idPanier}`, {
+        fetch(`https://projet-prog4e07.cegepjonquiere.ca/api/paniers/supprimer?idUtilisateur=${idUtilisateur}&id=${idPanier}`, {
             method: "DELETE",
         })
         .then(res => {
@@ -77,7 +93,7 @@ export default function Panier() {
         })
         .catch(err => console.error("Erreur lors de la suppression :", err));
     }
-    
+      
     return (
         <>
             <div className="container-fluid d-flex">
@@ -85,31 +101,30 @@ export default function Panier() {
                     <div className="col-11 col-md-9">
                         <h1>Panier</h1>
 
-                        {articlePanier.length === 0 ? (
-                            <p>Votre panier est vide.</p>
-                        ) : (
-                            articlePanier.map((article, index) => (
-                                <div key={index} className="d-flex bg-white rounded-3 my-3">
-                                    <div className="col-6 col-md-2">
-                                        <img src={article.image} className="img-fluid rounded-3" alt={article.nom} />
-                                    </div>
-                                    <div className="col-6 col-md-10 d-flex">
-                                        <div className="col-11 ps-3">
-                                            <div><p className="fw-bold">{article.nom}</p></div>
-                                            <div><p>{article.prix} $</p></div>
-                                            <div><p>Quantité : {article.quantiteArticle}</p></div>
-                                        </div>
-                                        <div className="col-1 d-flex justify-content-center align-items-center">
-                                            <button className="btn m-0 text-danger" onClick={() => supprimerArticle(article.idPanier)} >X</button>
-                                        </div>
-                                    </div>
+                        {articlePanier.map((article, index) => (
+                            <div key={index} className="d-flex bg-white rounded-4 shadow-sm p-2 my-3 align-items-center">
+                                
+                                <div className="col-4 col-md-2">
+                                    <img src={article.image} alt={article.nom} className="img-fluid rounded-3" style={{ objectFit: "cover", width: "100%", height: "100px" }} />
                                 </div>
-                            ))
-                        )}
+
+                                <div className="col-7 col-md-9 ps-3">
+                                    <h6 className="fw-bold mb-1 text-truncate">{article.nom}</h6>
+                                    <p className="mb-1 text-muted">{article.prix} $</p>
+                                    <p className="mb-0">Quantité : <strong>{article.quantiteArticle}</strong></p>
+                                </div>
+
+                                <div className="col-1 text-end">
+                                    <button className="btn btn-sm btn-outline-danger" title="Retirer" onClick={() => supprimerArticle(article.idPanier)} >
+                                        <i className="bi bi-x-lg">X</i>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+
                     </div>
                 </div>
 
-                {/* Affiche le module de paiement */}
                 <DetailsCommande articlePanier={articlePanier} onClickCommande={() => setShowModal(true)} />
             </div>
 
