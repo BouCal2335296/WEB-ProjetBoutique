@@ -51,7 +51,7 @@ export default function LanguageSelector() {
         />
         {selected}
       </button>
-      <ul className={`color4 dropdown-menu ${isOpen ? 'show' : ''}`}>
+      <ul className={`color1 dropdown-menu ${isOpen ? 'show' : ''}`}>
         {languages.map((lang) => (
           <li key={lang.code}>
             <button
