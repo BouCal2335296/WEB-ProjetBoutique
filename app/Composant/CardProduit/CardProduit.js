@@ -32,7 +32,7 @@ export default function CardProduit({ id, image, nom, prix }) {
                 </div>
             </Link>
             {role === 'Administrateur' && (
-                <Link href={`/PageModifArticle/${id}`}>
+                <Link href={`/ModifierProduit/${id}`}>
                 <button className="btn btn-sm btn-outline-warning w-100">Modifier</button>
                 </Link>
             )}

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from "next/link";
 import LanguageSelector from "../Language/languageSelector";
 import MenuAdmin from "../MenuAdmin/menuAdmin";
-import Connexion from "../Connexion/Connexion";
+import Connexion from "../Connexion/connexion";
 import Inscription from "../Inscription/Inscription";
 import db from '../../lib/localbase';
 
@@ -39,27 +39,6 @@ export default function Header() {
         }
         fetchUserId();
     }, []);
-
-    // useEffect(() => {
-    //     async function fetchToken() {
-    //         try {
-    //             const records = await db.collection('tokens').get();
-    //             const tokenDoc = records.find(doc => doc.id === 'jwt');
-    //             if (tokenDoc) {
-    //                 setUsername(tokenDoc.username);
-    //                 setRole(tokenDoc.role);
-    //             } else {
-    //                 setUsername(null);
-    //                 setRole(null);
-    //             }
-    //         } catch (error) {
-    //             console.error("Erreur lors de la récupération du token", error);
-    //             setUsername(null);
-    //             setRole(null);
-    //         }
-    //     }
-    //     fetchToken();
-    // }, []); //BUG CONSOLE
 
     //Supprime le jwt lors de la déconnexion
     function deconnexion() {
